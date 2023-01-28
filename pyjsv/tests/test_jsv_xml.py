@@ -21,3 +21,33 @@ class TestSimpleXml(unittest.TestCase):
         sx_reader = SimpleXml.upload_from_file(path_to_temp_xml, kw="text")
         self.assertEqual(sx_writer.data, sx_reader.data)
         remove(path_to_temp_xml)
+        
+    def test_upload_from_str(self):
+        string_xml = '''<?xml version="1.0"?>
+<data>
+    <country name="Liechtenstein">
+        <rank>1</rank>
+        <year>2008</year>
+        <gdppc>141100</gdppc>
+        <neighbor name="Austria" direction="E"/>
+        <neighbor name="Switzerland" direction="W"/>
+        <field2 name="asdfasd">some vlaue2</field2>
+    </country>
+    <country name="Singapore">
+        <rank>4</rank>
+        <year>2011</year>
+        <gdppc>59900</gdppc>
+        <neighbor name="Malaysia" direction="N"/>
+    </country>
+    <country name="Panama">
+        <rank>68</rank>
+        <year>2011</year>
+        <gdppc>13600</gdppc>
+        <neighbor name="Costa Rica" direction="W"/>
+        <neighbor name="Colombia" direction="E"/>
+    </country>
+</data>'''
+        sx = SimpleXml.upload_from_str(string_xml, kw="text")
+        country = sx.data['data'][0]["country"]
+        self.assertEqual(country[3]["gdppc"][0]['text'], '141100') # It will look better in the future
+        self.assertEqual(country[0]["name"], 'Liechtenstein')
