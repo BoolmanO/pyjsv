@@ -1,3 +1,6 @@
 __pycache__
 venv
 .vscode
+
+.dev
+example.py

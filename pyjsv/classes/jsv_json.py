@@ -1,5 +1,5 @@
 import json
-from files import PathLike
+from .files import PathLike
 from .interfaces import _IJsonLikeObj
 
 class SimpleJson(_IJsonLikeObj):
@@ -17,6 +17,6 @@ class SimpleJson(_IJsonLikeObj):
     def upload_to_dict(self) -> dict:
         return self.data
     
-    def save_file(self, path: PathLike, mode="w+"):
+    def save_file(self, path: PathLike, mode="+w"):
         with open(path, mode) as json_file:
             json.dump(self.data, json_file)

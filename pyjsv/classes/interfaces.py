@@ -1,12 +1,16 @@
 from abc import ABC, abstractmethod, abstractstaticmethod
-from files import PathLike
+from .files import PathLike
 
 class _IJsonLikeObj(ABC):
     # TODO: add comments, annotations
+    data: dict
     
     def __init__(self, dict_obj: dict):
         assert isinstance(dict_obj, dict)
         self.data = dict_obj
+        
+    def __repr__(self):
+        return f"<{self.__class__}: {self.data}>"
     
     @abstractstaticmethod
     def load_from_dict(to_json: dict) -> "_IJsonLikeObj": pass
