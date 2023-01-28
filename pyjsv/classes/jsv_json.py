@@ -13,6 +13,10 @@ class SimpleJson(_IJsonLikeObj):
     def upload_from_file(to_json: PathLike) -> "SimpleJson":
         with open(to_json) as json_file:
             return SimpleJson(json.loads(json_file.read()))
+        
+    @staticmethod
+    def upload_from_str(to_json: str) -> "SimpleJson":
+        return SimpleJson(json.loads(to_json))
     
     def upload_to_dict(self) -> dict:
         return self.data
