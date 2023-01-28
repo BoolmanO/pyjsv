@@ -6,10 +6,10 @@ from .templates_utils import \
     
 from .test_dicts import workers, animals, string_json_website, dict_json_website
 
-class TestSimpleJsonDict(unittest.TestCase):
+class TestSimpleJson(unittest.TestCase):
 
     def test_read_write_files(self):
-        writer_sj = SimpleJson.load_from_dict(animals)
+        writer_sj = SimpleJson.upload_from_dict(animals)
         path_to_file = path.join(path_to_temp, unique_filename()) + ".json"
         writer_sj.save_file(path_to_file)
         reader_sj = SimpleJson.upload_from_file(path_to_file)
@@ -19,7 +19,7 @@ class TestSimpleJsonDict(unittest.TestCase):
         self.assertEqual(writer_sj.data, reader_sj.data)
         
     def test_dicts_upload(self):
-        sj = SimpleJson.load_from_dict(workers)
+        sj = SimpleJson.upload_from_dict(workers)
         self.assertEqual(sj.data, workers)
         
     def test_string_upload(self):

@@ -13,7 +13,10 @@ class _IJsonLikeObj(ABC):
         return f"<{self.__class__}: {self.data}>"
     
     @abstractstaticmethod
-    def load_from_dict(to_json: dict) -> "_IJsonLikeObj": pass
+    def upload_from_dict(to_json: dict) -> "_IJsonLikeObj": pass
+    
+    @abstractstaticmethod
+    def upload_from_str(to_json: str) -> "_IJsonLikeObj": pass
     
     @abstractstaticmethod
     def upload_from_file(to_json: PathLike) -> "_IJsonLikeObj": pass

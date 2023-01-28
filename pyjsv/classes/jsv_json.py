@@ -6,7 +6,7 @@ class SimpleJson(_IJsonLikeObj):
     "Implement interface"
     
     @staticmethod
-    def load_from_dict(to_json: dict) -> "SimpleJson":
+    def upload_from_dict(to_json: dict) -> "SimpleJson":
         return SimpleJson(to_json)
     
     @staticmethod
