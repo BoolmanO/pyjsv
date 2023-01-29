@@ -95,3 +95,14 @@ SimpleXml
     - get_xml() -> str // return xml
     - save_file(os.PathLike) -> None // saves the file of its extension to the given path
     - get_dict() -> dict
+
+
+You can convert xml into dict
+```python
+import requests
+from pyjsv import SimpleJson, SimpleXml
+
+url = "https://iss.moex.com/iss/history/engines/stock/markets/index/securities.xml?date=2022.12.12"
+my_data = SimpleXml.upload_from_str(requests.get(url).text)
+print(my_data.get_dict())
+```
