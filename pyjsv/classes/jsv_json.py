@@ -25,3 +25,6 @@ class SimpleJson(_IJsonLikeObj):
     def save_file(self, path: PathLike, mode="+w"):
         with open(path, mode) as json_file:
             json.dump(self.data, json_file)
+            
+    def get_dict(self):
+        return self.data

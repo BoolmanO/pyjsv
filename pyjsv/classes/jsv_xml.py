@@ -21,7 +21,7 @@ class SimpleXml:
     
     @staticmethod
     def upload_from_str(xml: str, text_kw="#text", attrs_pref="@") -> SimpleXml:
-        data = xmltodict.parse(xml, attr_prefix=attrs_pref, cdata_key=attrs_pref)
+        data = xmltodict.parse(xml, attr_prefix=attrs_pref, cdata_key=text_kw)
         return SimpleXml(data, xml, text_kw=text_kw, attrs_pref=attrs_pref)
     
     @staticmethod
@@ -34,7 +34,7 @@ class SimpleXml:
     def get_dict(self):
         if self.data is not None:
             return self.data
-        return xmltodict.parse(self.xml, attr_prefix=self.attrs_pref, cdata_key=self.attrs_pref)
+        return xmltodict.parse(self.xml, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
         
     def save_file(self, path: PathLike, mode="+w"):
         save_file(path, self.get_xml(), mode)
