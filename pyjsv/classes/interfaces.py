@@ -3,7 +3,6 @@ from .files import PathLike
 
 class _IJsonLikeObj(ABC):
     # TODO: add comments, annotations
-    data: dict
     
     def __init__(self, dict_obj: dict):
         assert isinstance(dict_obj, dict)
@@ -21,8 +20,10 @@ class _IJsonLikeObj(ABC):
     @abstractstaticmethod
     def upload_from_file(to_json: PathLike) -> "_IJsonLikeObj": pass
     
-    @abstractmethod
-    def upload_to_dict(self) -> dict: pass
     
     @abstractmethod
     def save_file(self, path: PathLike): pass
+    
+    @abstractmethod
+    def get_dict(self) -> dict: pass
+    

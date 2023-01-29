@@ -3,7 +3,7 @@
 
 This library is the easiest way to manipulate data through multiple formats, xml, toml, yaml, json. They are all serialized to dict
 
-(At the moment we only have json format)
+(At the moment we only have json and xml format)
 ## Running Tests
 
 To run tests, run the following command
@@ -59,4 +59,39 @@ sj = SimpleXml.upload_from_str(my_parsed_xml)
 sj.save_file("my_xml.xml")
 
 ```
-See sources (pyjsv.classes.jsv_xml.py) for explanation of current position about xml and dict
+
+
+
+
+## Docs
+
+
+_IJsonLikeObj
+(pyjsv.classes.interfaces.py)
+
+An abstract class that implements a base interface:
+
+- statics:
+    - upload_from_str(str) -> Self
+    - upload_from_dict(dict) -> Self
+    - upload_from_file(os.PathLike) -> Self
+
+- methods:
+    - save_file(os.PathLike) -> None // saves the file of its extension to the given path
+    - get_dict() -> dict
+
+SimpleJson(_IJsonLikeObj)
+(pyjsv.classes.jsv_json.py)
+- implement _IJsonLikeObj with no changes
+
+
+SimpleXml
+- statics:
+    - upload_from_str(str, text_kw: str, attrs_pref: str) -> Self
+    - upload_from_dict(dict, text_kw: str, attrs_pref: str) -> Self
+    - upload_from_file(os.PathLike, , text_kw: str, attrs_pref: str) -> Self
+
+- methods:
+    - get_xml() -> str // return xml
+    - save_file(os.PathLike) -> None // saves the file of its extension to the given path
+    - get_dict() -> dict
