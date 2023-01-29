@@ -1,70 +1,46 @@
-import xml.etree.ElementTree as ET
+from __future__ import annotations
+import xmltodict
 from typing import Optional
 from .files import PathLike, save_file
 
 class SimpleXml:
-    data: dict
     
-    def __init__(self, data, tree: Optional[ET.ElementTree] = None, kw: str ="__xml__text__in__field"):
+    def __init__(self, data: dict, xml: Optional[str]=None, text_kw: str="#text", attrs_pref:str="@"):
         assert isinstance(data, dict)
-        assert isinstance(tree, (ET.ElementTree, type(None)))
-        assert isinstance(kw, str)
+        assert isinstance(xml, (str, type(None)))
+        self.attrs_pref = attrs_pref
+        self.text_kw = text_kw
         self.data = data
-        self.__tree = tree
-        self.kw = kw
+        self.xml = xml
     
     @staticmethod
-    def _upload_from_elem(elem: ET.Element, kw: str="__xml__text__in__field") -> "SimpleXml":
-        tree = ET.ElementTree(elem)
-        return SimpleXml._upload_from_tree(tree, kw)
+    def upload_from_file(path: PathLike, text_kw="#text", attrs_pref="@", mode="r") -> SimpleXml:
+        with open(path, mode) as xml_file:
+            data = xmltodict.parse(xml_file.read())
+            return SimpleXml(data, text_kw=text_kw, attrs_pref=attrs_pref)
     
     @staticmethod
-    def _upload_from_tree(tree: ET.ElementTree, kw: str="__xml__text__in__field") -> "SimpleXml":
-        assert isinstance(tree, ET.ElementTree)
-        root = tree.getroot()
-        temp = []
-        
-        for child in root:
-            chtmp = []
-            
-            if child.attrib is not None:
-                chtmp.append(child.attrib)
-            
-            for i in root.findall(child.tag+"/*"):
-                chtmp.append({i.tag: [{kw: i.text}, i.attrib]})
-                
-            temp.append({child.tag: chtmp})
-            
-        return SimpleXml({root.tag: temp}, tree, kw)
+    def upload_from_str(xml: str, text_kw="#text", attrs_pref="@") -> SimpleXml:
+        data = xmltodict.parse(xml, attr_prefix=attrs_pref, cdata_key=attrs_pref)
+        return SimpleXml(data, xml, text_kw=text_kw, attrs_pref=attrs_pref)
     
     @staticmethod
-    def upload_from_dict(to_xml: dict, kw: str="__xml__text__in__field") -> "SimpleXml":
-        raise NotImplementedError("See sources for explanation of current position with xml and dict")
-        #return SimpleXml(to_xml, kw=kw) # No tree
-    
-    @staticmethod
-    def upload_from_str(to_xml: str, kw: str="__xml__text__in__field") -> "SimpleXml":
-        elem = ET.fromstring(to_xml)
-        return SimpleXml._upload_from_elem(elem, kw)
-    
-    @staticmethod
-    def upload_from_file(to_xml: PathLike, kw: str="__xml__text__in__field") -> "SimpleXml":
-        tree = ET.parse(to_xml)
-        return SimpleXml._upload_from_tree(tree, kw)
-    
-    def get_xml(self, encoding="utf-8") -> str:
-        if self.__tree:
-            return ET.tostring(self.__tree.getroot(), encoding=encoding, method="xml").decode(encoding) 
+    def upload_from_dict(data: dict, text_kw="#text", attrs_pref="@") -> SimpleXml:
+        return SimpleXml(data, text_kw=text_kw, attrs_pref=attrs_pref)
 
-        raise NotImplementedError("See sources for explanation of current position with xml and dict")
+    def get_xml(self):
+        return xmltodict.unparse(self.data, pretty=True, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
+    
+    def get_dict(self):
+        if self.data is not None:
+            return self.data
+        return xmltodict.parse(self.xml, attr_prefix=self.attrs_pref, cdata_key=self.attrs_pref)
         
-    def upload_to_dict(self) -> dict:
-        return self.data
-    
-    def save_file(self, path: PathLike):
-        save_file(path, self.get_xml())
-    
+    def save_file(self, path: PathLike, mode="+w"):
+        save_file(path, self.get_xml(), mode)
 
+
+"Old Docs!"
 """
 Explanation of dict to xml
 
