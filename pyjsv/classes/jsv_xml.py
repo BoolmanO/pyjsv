@@ -49,15 +49,15 @@ SimpleXml specification:
     
 FAQ:
 
-A: What is text_kw?
-Q: text_kw defines the name of a dictionary key that stores data with the text of a specific tag
+Q: What is text_kw?
+A: text_kw defines the name of a dictionary key that stores data with the text of a specific tag
 
-A: What is attrs_pref?
-Q: attrs_pref is an attribute prefix, 
+Q: What is attrs_pref?
+A: attrs_pref is an attribute prefix, 
    it is necessary in order to be able to distinguish between the attributes of the tag itself and its children
    
-A: How can i load a dict into xml format without errors?
-Q: Suppose you have the following dict:
+Q: How can i load a dict into xml format without errors?
+A: Suppose you have the following dict:
 {"data": 
     {"developers": [
         {"country": "USA", "rank": "Senior", "name": "Jony"},

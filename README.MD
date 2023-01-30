@@ -116,3 +116,50 @@ url = "https://iss.moex.com/iss/history/engines/stock/markets/index/securities.j
 my_data = SimpleXml.upload_from_dict(requests.get(url).json())
 print(my_data)
 ```
+## SimpleXml FAQ
+
+#### What is text_kw?
+A: text_kw defines the name of a dictionary key that stores data with the text of a specific tag
+
+#### What is attrs_pref?
+A: attrs_pref is an attribute prefix, 
+   it is necessary in order to be able to distinguish between the attributes of the tag itself and its children
+   
+#### How can i load a dict into xml format without errors?
+A: Suppose you have the following dict:
+```json
+{"data": 
+    {"developers": [
+        {"country": "USA", "rank": "Senior", "name": "Jony"},
+        {"country": "Russia", "rank": "Senior", "name": "Boris"}
+        ]
+    }
+}
+```
+
+   Are you expecting to receive:
+```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <data>
+        <developers country="USA" rank="Senior">Jony</developers>     
+        <developers country="Russia" rank="Senior">Boris</developers> 
+    </data>
+```
+    
+
+To serialize correctly and place for example the name field in the text value of the tag, you must specify text_kw
+and add a prefix to the expected attributes in the dictionary, by default @
+    
+updated dict (let's assume it is in some_values ​​variable):
+```json
+    {"data": 
+        {"developers": [
+            {"@country": "USA", "@rank": "Senior", "name": "Jony"},
+            {"@country": "Russia", "@rank": "Senior", "name": "Boris"}]
+        }
+    }
+```
+python:
+```python
+    sx = SimpleXml.upload_from_dict(some_values, text_kw="name")
+```
