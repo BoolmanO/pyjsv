@@ -6,8 +6,8 @@ from .templates_utils import \
     
 from .test_dicts import workers, animals, string_json_website, dict_json_website
 
-class TestSimpleXml(unittest.TestCase):
 
+class TestSimpleXml(unittest.TestCase):
     def test_convert(self):
         sx = SimpleXml.upload_from_file(path.join(path_to_samples, "test_xml_1.xml"))
         sx2 = SimpleXml.upload_from_dict(sx.get_dict())

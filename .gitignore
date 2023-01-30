@@ -3,4 +3,5 @@ venv
 .vscode
 
 .dev
+.dev.py
 example.py

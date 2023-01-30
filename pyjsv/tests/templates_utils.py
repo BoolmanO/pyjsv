@@ -4,6 +4,7 @@ import time
 
 from classes import SimpleJson, SimpleXml
 
+
 path_to_samples = path.join("pyjsv", "tests", "samples")
 path_to_temp = path.join("pyjsv", "tests", "temp")
 
