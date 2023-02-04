@@ -65,6 +65,3 @@ sj.save_file("my_xml.xml")
 
 ```
 ## For more information read wiki https://github.com/BoolmanO/pyjsv/wiki
-
-
-
