@@ -9,7 +9,7 @@ To run tests, run the following command
 
 windows
 ```bash
-  python .\pyjsv\test_all.py
+python .\pyjsv\test_all.py
 ```
 linux
 ```bash
