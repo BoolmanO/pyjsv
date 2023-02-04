@@ -1,0 +1,3 @@
+this file is created so that git sees this folder and does not consider it empty.
+If you previously cloned a repository and tried to run tests, an error popped up.
+Now it won't happen

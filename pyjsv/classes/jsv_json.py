@@ -10,13 +10,13 @@ class SimpleJson(_IJsonLikeObj):
         return SimpleJson(to_json)
     
     @staticmethod
+    def upload_from_str(to_json: str) -> SimpleJson:
+        return SimpleJson(json.loads(to_json))
+
+    @staticmethod
     def upload_from_file(to_json: PathLike) -> SimpleJson:
         with open(to_json, "r") as json_file:
             return SimpleJson(json.loads(json_file.read()))
-        
-    @staticmethod
-    def upload_from_str(to_json: str) -> SimpleJson:
-        return SimpleJson(json.loads(to_json))
     
     def save_file(self, path: PathLike, mode="+w"):
         with open(path, mode) as json_file:
