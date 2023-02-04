@@ -60,8 +60,8 @@ my_parsed_xml = '''
     </language>
 </data>
 '''
-sj = SimpleXml.upload_from_str(my_parsed_xml)
-sj.save_file("my_xml.xml")
+sx = SimpleXml.upload_from_str(my_parsed_xml)
+print(sx.get_dict())
 
 ```
 ## For more information read wiki https://github.com/BoolmanO/pyjsv/wiki
