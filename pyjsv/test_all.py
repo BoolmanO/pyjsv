@@ -6,4 +6,3 @@ from tests import TestSimpleJson, TestSimpleXml, TestXmlJsonConvert, unittest
 
 
 unittest.main()
-
