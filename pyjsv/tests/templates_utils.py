@@ -2,7 +2,7 @@ from os import path, remove
 import sys
 import time
 
-from classes import SimpleJson, SimpleXml
+from classes import SimpleJson, SimpleXml, SimpleToml
 
 
 path_to_samples = path.join("pyjsv", "tests", "samples")

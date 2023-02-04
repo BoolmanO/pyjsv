@@ -19,7 +19,6 @@ class TestXmlJsonConvert(unittest.TestCase):
             
         sx = SimpleXml.upload_from_dict(some_values, text_kw="text")
         generated_xml = sx.get_xml()
-        print(generated_xml)
         sx2 = SimpleXml.upload_from_str(generated_xml, text_kw="text") # generate dict by xml
         sj = SimpleJson.upload_from_dict(sx2.get_dict())
         self.assertEqual(sj.get_dict(), some_values)

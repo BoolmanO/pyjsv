@@ -13,11 +13,11 @@ class SimpleXml(_IJsonLikeObj):
         self.xml = xml
     
     @staticmethod
-    def upload_from_dict(data: dict[str, list], text_kw="#text", attrs_pref="@") -> SimpleXml:
+    def upload_from_dict(to_xml: dict[str, list], text_kw="#text", attrs_pref="@") -> SimpleXml:
         """The dictionary to be loaded must conform to the following structure: [str:list], where str is the root tag \n
         If you are unsure and want to see examples, you can take them from tests or documentation, at the bottom of pyjsv\classes\jsv_xml.py \n 
         there is also an example and answers to questions"""
-        return SimpleXml(data, text_kw=text_kw, attrs_pref=attrs_pref)
+        return SimpleXml(to_xml, text_kw=text_kw, attrs_pref=attrs_pref)
 
     @staticmethod
     def upload_from_str(xml: str, text_kw="#text", attrs_pref="@") -> SimpleXml:
@@ -30,15 +30,15 @@ class SimpleXml(_IJsonLikeObj):
             data = xmltodict.parse(xml_file.read())
             return SimpleXml(data, text_kw=text_kw, attrs_pref=attrs_pref)
 
-    def get_xml(self):
+    def get_xml(self) -> str:
         return xmltodict.unparse(self.data, pretty=True, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
     
-    def get_dict(self):
+    def get_dict(self) -> dict[str, list]:
         if self.data is not None:
             return self.data
         return xmltodict.parse(self.xml, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
         
-    def save_file(self, path: PathLike, mode="+w"):
+    def save_file(self, path: PathLike, mode="+w") -> None:
         save_file(path, self.get_xml(), mode)
         
         

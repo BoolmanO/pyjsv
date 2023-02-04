@@ -1,0 +1,24 @@
+[table]
+foo = "bar"
+amogus = "VERY SUS!"
+
+[log]
+dev_branch = true
+any_int = 5
+
+[toml]
+authors = ["name1", "name2", "name3"]
+
+[any_table]
+any = "data"
+
+[servers]
+
+    # comment
+    [servers.alpha]
+    ip = "127.0.0.1"
+    port = "8000"
+
+    [servers.beta]
+    ip = "127.0.0.1"
+    port = "8001"
