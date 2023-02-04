@@ -2,6 +2,7 @@ __pycache__
 venv
 .vscode
 
+.auth.py
 .dev
 .dev.py
 example.py
