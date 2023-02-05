@@ -26,7 +26,7 @@ SimpleJson
 ```python
 from pyjsv import SimpleJson
 
-my_parsed_dict =  \
+my_dict =  \
 {
     "languages": [
         {"python": ["easy to learn", "slow"]},
@@ -35,11 +35,8 @@ my_parsed_dict =  \
         ]
 }
 
-sj = SimpleJson.upload_from_dict(my_parsed_dict)
+sj = SimpleJson.from_dict(my_parsed_dict)
 sj.save_file("my_json.json")
-"""Support for yaml, toml will be added in the future.
-Data between them will be transferred just as easily."""
-
 ```
 
 SimpleXml
@@ -60,7 +57,7 @@ my_parsed_xml = '''
     </language>
 </data>
 '''
-sx = SimpleXml.upload_from_str(my_parsed_xml)
+sx = SimpleXml.from_string(my_parsed_xml)
 print(sx.get_dict())
 
 ```

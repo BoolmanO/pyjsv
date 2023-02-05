@@ -1,44 +1,56 @@
 from __future__ import annotations
 import xmltodict
 from typing import Optional
-from .files import PathLike, save_file
+from .files import PathLike, save_file, OpenTextMode
 from .interfaces import _IJsonLikeObj
 
 
 class SimpleXml(_IJsonLikeObj):
-    def __init__(self, data: dict[str, list], xml: Optional[str]=None, text_kw: str="#text", attrs_pref:str="@"):
-        self.attrs_pref = attrs_pref
-        self.text_kw = text_kw
+    def __init__(self, data: dict[str, list], xml: Optional[str]=None, 
+                text_key: str="#text", attr_prefix:str="@"):
+        """
+        Initialize a SimpleXml instance.
+
+        :param data: XML data as a dictionary
+        :param xml: XML data as a string
+        :param text_key: key used to store the text of a specific tag
+        :param attr_prefix: prefix used to distinguish between tag attributes and its children
+        """
+        self.attr_prefix = attr_prefix
+        self.text_key = text_key
         self.data = data
         self.xml = xml
     
     @staticmethod
-    def upload_from_dict(to_xml: dict[str, list], text_kw="#text", attrs_pref="@") -> SimpleXml:
-        """The dictionary to be loaded must conform to the following structure: [str:list], where str is the root tag \n
+    def from_dict(to_xml: dict[str, list], text_key: str="#text", attr_prefix: str="@") -> SimpleXml:
+        """The dictionary to be loaded must conform to the following structure: {str:list}, where str is the root tag \n
         If you are unsure and want to see examples, you can take them from tests or documentation, at the bottom of pyjsv\classes\jsv_xml.py \n 
         there is also an example and answers to questions"""
-        return SimpleXml(to_xml, text_kw=text_kw, attrs_pref=attrs_pref)
+        return SimpleXml(to_xml, text_key=text_key, attr_prefix=attr_prefix)
 
     @staticmethod
-    def upload_from_str(xml: str, text_kw="#text", attrs_pref="@") -> SimpleXml:
-        data = xmltodict.parse(xml, attr_prefix=attrs_pref, cdata_key=text_kw)
-        return SimpleXml(data, xml, text_kw=text_kw, attrs_pref=attrs_pref)
+    def from_string(xml: str, text_key: str="#text", attr_prefix: str="@") -> SimpleXml:
+        data = xmltodict.parse(xml, attr_prefix=attr_prefix, cdata_key=text_key)
+        return SimpleXml(data, xml, text_key=text_key, attr_prefix=attr_prefix)
 
     @staticmethod
-    def upload_from_file(path: PathLike, text_kw="#text", attrs_pref="@") -> SimpleXml:
-        with open(path, "r") as xml_file:
+    def from_file(path: PathLike, text_key: str="#text", attr_prefix: str="@", mode: OpenTextMode = "r") -> SimpleXml:
+        with open(path, mode) as xml_file:
             data = xmltodict.parse(xml_file.read())
-            return SimpleXml(data, text_kw=text_kw, attrs_pref=attrs_pref)
+            return SimpleXml(data, text_key=text_key, attr_prefix=attr_prefix)
 
     def get_xml(self) -> str:
-        return xmltodict.unparse(self.data, pretty=True, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
+        "Returns the `xml` string representation of the data stored in the class."
+        return xmltodict.unparse(self.data, pretty=True, attr_prefix=self.attr_prefix, cdata_key=self.text_key)
     
     def get_dict(self) -> dict[str, list]:
+        "Returns the dictionary representation of the data stored in the class."
         if self.data is not None:
             return self.data
-        return xmltodict.parse(self.xml, attr_prefix=self.attrs_pref, cdata_key=self.text_kw)
+        return xmltodict.parse(self.xml, attr_prefix=self.attr_prefix, cdata_key=self.text_key)
         
-    def save_file(self, path: PathLike, mode="+w") -> None:
+    def save_file(self, path: PathLike, mode: OpenTextMode="+w") -> None:
+        "Saves the data (in `xml` format) stored in the class to a file."
         save_file(path, self.get_xml(), mode)
         
         
@@ -49,11 +61,11 @@ SimpleXml specification:
     
 FAQ:
 
-Q: What is text_kw?
-A: text_kw defines the name of a dictionary key that stores data with the text of a specific tag
+Q: What is text_key?
+A: text_key defines the name of a dictionary key that stores data with the text of a specific tag
 
-Q: What is attrs_pref?
-A: attrs_pref is an attribute prefix, 
+Q: What is attr_prefix?
+A: attr_prefix is an attribute prefix, 
    it is necessary in order to be able to distinguish between the attributes of the tag itself and its children
    
 Q: How can i load a dict into xml format without errors?
@@ -74,7 +86,7 @@ A: Suppose you have the following dict:
     </data>
     
     To serialize correctly and place for example the name field in the text value of the tag
-    You must specify text_kw
+    You must specify text_key
     and add a prefix to the expected attributes in the dictionary, by default @
     
     updated dict:
@@ -85,5 +97,5 @@ A: Suppose you have the following dict:
         }
     }
     code:
-    sx = SimpleXml.upload_from_dict(some_values, text_kw="name")
+    sx = SimpleXml.from_dict(some_values, text_key="name")
 """
