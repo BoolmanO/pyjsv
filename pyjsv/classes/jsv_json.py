@@ -14,8 +14,8 @@ class SimpleJson(_IJsonLikeObj):
         return SimpleJson(json.loads(to_json))
 
     @staticmethod
-    def from_file(path: PathLike, mode: OpenTextMode="r") -> SimpleJson:
-        with open(path, mode) as json_file:
+    def from_file(path: PathLike) -> SimpleJson:
+        with open(path, "r") as json_file:
             return SimpleJson(json.loads(json_file.read()))
 
     def get_json(self) -> str:

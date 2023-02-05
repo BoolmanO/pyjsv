@@ -34,8 +34,8 @@ class SimpleXml(_IJsonLikeObj):
         return SimpleXml(data, xml, text_key=text_key, attr_prefix=attr_prefix)
 
     @staticmethod
-    def from_file(path: PathLike, text_key: str="#text", attr_prefix: str="@", mode: OpenTextMode = "r") -> SimpleXml:
-        with open(path, mode) as xml_file:
+    def from_file(path: PathLike, text_key: str="#text", attr_prefix: str="@") -> SimpleXml:
+        with open(path, "r") as xml_file:
             data = xmltodict.parse(xml_file.read())
             return SimpleXml(data, text_key=text_key, attr_prefix=attr_prefix)
 

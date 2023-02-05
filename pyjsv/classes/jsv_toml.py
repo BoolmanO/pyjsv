@@ -17,8 +17,8 @@ class SimpleToml(_IJsonLikeObj):
         return SimpleToml(data=dict(tomlkit.parse(toml)))
 
     @staticmethod
-    def from_file(path: PathLike, mode: OpenTextMode="r") -> SimpleToml:
-        with open(path, mode) as toml_file:
+    def from_file(path: PathLike) -> SimpleToml:
+        with open(path, "r") as toml_file:
             data = tomlkit.parse(toml_file.read())
             return SimpleToml(data)
 
