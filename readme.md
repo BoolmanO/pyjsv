@@ -1,4 +1,5 @@
 # pyjsv
+[![CodeFactor](https://www.codefactor.io/repository/github/boolmano/pyjsv/badge)](https://www.codefactor.io/repository/github/boolmano/pyjsv)
 
 This library is the easiest way to manipulate data through multiple formats, xml, toml, yaml, json. They are all serialized to dict
 
